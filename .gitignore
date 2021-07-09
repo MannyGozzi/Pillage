@@ -1,6 +1,9 @@
 # Visual Studio 2015 user specific files
 .vs/
 
+# This set of assets is too large
+Content/StylizedNatureVol2/*
+
 # Epic Online Services SDK
 SDK/*
 
