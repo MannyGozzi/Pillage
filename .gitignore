@@ -1,8 +1,12 @@
 # Visual Studio 2015 user specific files
 .vs/
 
-# This set of assets is too large
+# FOLLOWING ASSET PACKS ARE TOO LARGE
 Content/StylizedNatureVol2/*
+Content/LPSDeluxe2TropicalEnvironment/*
+Content/InfinityBladeWeapons*
+
+# END OF LARGE ASSET PACKS
 
 # Epic Online Services SDK
 SDK/*
