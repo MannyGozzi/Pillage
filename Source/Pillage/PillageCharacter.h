@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Engine/TriggerVolume.h"
 #include "PillageCharacter.generated.h"
 
 class AWeapon;
@@ -29,6 +30,7 @@ public:
 
 protected:
 	void OnResetVR();
+	void FindItems();
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
 	/** Called for side to side input */
@@ -55,6 +57,12 @@ private:
 	TSubclassOf<AWeapon> WeaponClass;
 
 	UPROPERTY()
-	AWeapon* Weapon;
+	AWeapon* CurrentWeapon;
+
+	UPROPERTY()
+	class UItemInteractor* ItemInteractor;
+
+public:
+	AWeapon* GetCurrentWeapon();
 };
 

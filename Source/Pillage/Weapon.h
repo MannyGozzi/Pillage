@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Item.h"
 #include "Weapon.generated.h"
 
 UCLASS()
-class PILLAGE_API AWeapon : public AActor
+class PILLAGE_API AWeapon : public AItem
 {
 	GENERATED_BODY()
 	
