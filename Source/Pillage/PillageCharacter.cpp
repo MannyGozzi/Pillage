@@ -82,6 +82,17 @@ AWeapon* APillageCharacter::GetCurrentWeapon()
 	return CurrentWeapon;
 }
 
+void APillageCharacter::SetCurrentWeapon(AWeapon* Weapon)
+{
+	if (CurrentWeapon != nullptr)
+	{
+		CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
+	}
+	CurrentWeapon = Weapon;
+	CurrentWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, TEXT("weapon_socket")); // runtime attachment
+	CurrentWeapon->SetOwner(this);
+}
+
 void APillageCharacter::FindItems()
 {
 	if (ItemInteractor == nullptr) return;

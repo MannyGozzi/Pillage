@@ -44,18 +44,18 @@ bool UItemInteractor::FindItems()
 	ObjectTypes.Add(EObjectTypeQuery::ObjectTypeQuery1);
 	ActorsToIgnore.Add(GetOwner());
 	ActorsToIgnore.Add(Cast<AActor>(Owner->GetCurrentWeapon()));
-	TArray<AActor*> Items;
+	TArray<AActor*> FoundItems;
 
 	const bool ObjectFound = UKismetSystemLibrary::SphereOverlapActors(
 		GetWorld(), Location, REACH,
-		ObjectTypes, AItem::StaticClass(), ActorsToIgnore, Items
+		ObjectTypes, AItem::StaticClass(), ActorsToIgnore, FoundItems
 	);
 
-	// UKismetSystemLibrary::DrawDebugSphere(GetWorld(), Location, REACH, 16, FLinearColor::White, 1.f, 1.f );
+	UKismetSystemLibrary::DrawDebugSphere(GetWorld(), Location, REACH, 16, FLinearColor::White, 1.f, 1.f );
 
 	if (ObjectFound)
 	{
-		for (AActor* Item: Items)
+		for (AActor* Item: FoundItems)
 		{
 			if (GEngine == nullptr) return false;
 			if (Item == nullptr) return false;
@@ -75,15 +75,42 @@ void UItemInteractor::ItemFound(AItem* Item)
 	switch (ItemClass)
 	{
 	case Class::Weapon:
-		UE_LOG(LogTemp, Warning, TEXT("Found weapon"));
+	{
+		AWeapon* Weapon = Cast<AWeapon>(Item);
+		if (Weapon != nullptr) WeaponFound(Weapon);
 		break;
+	}
 	case Class::Consumeable:
+	{
 		UE_LOG(LogTemp, Warning, TEXT("Found consumeable"));
 		break;
+	}
 	case Class::Resource:
+	{
 		UE_LOG(LogTemp, Warning, TEXT("Found resource"));
 		break;
+	}
 	default:
 		break;
 	}
 }
+
+void UItemInteractor::WeaponFound(AWeapon* Weapon)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Found Weapon: %s"), *Weapon->GetItemNameString());
+	if (Weapons.Num() > (int32) WeaponLimit) return;
+	AddWeaponToInventory(Weapon);
+}
+
+void UItemInteractor::AddWeaponToInventory(AWeapon* Weapon)
+{
+	Weapons.Add(Weapon);
+	UE_LOG(LogTemp, Warning, TEXT("Added %s to weapon inventory"), *Weapon->GetItemNameString());
+	UE_LOG(LogTemp, Warning, TEXT("Equipping weapon"));
+	if (GetOwner() == nullptr) return;
+	APillageCharacter* Owner = Cast<APillageCharacter>(GetOwner());
+	if (Owner == nullptr) return;
+	UE_LOG(LogTemp, Warning, TEXT("Owner found, adding weapon"));
+	Owner->SetCurrentWeapon(Weapon);
+}
+

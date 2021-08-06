@@ -64,5 +64,6 @@ private:
 
 public:
 	AWeapon* GetCurrentWeapon();
+	void SetCurrentWeapon(AWeapon* Weapon);
 };
 

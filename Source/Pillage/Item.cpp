@@ -28,3 +28,50 @@ Class AItem::GetClass()
 {
 	return Class;
 }
+
+FString AItem::GetItemNameString()
+{
+	switch (ItemName)
+	{
+	case Axe:
+		return TEXT("Axe");
+		break;
+	case Sword:
+		return TEXT("Sword");
+		break;
+	case Crossbow:
+		return TEXT("Crossbow");
+		break;
+	case Staff:
+		return TEXT("Staff");
+		break;
+	case PotionSpeed:
+		return TEXT("PotionSpeed");
+		break;
+	case PotionFireSpeed:
+		return TEXT("PotionFireSpeed");
+		break;
+	case PotionDamage:
+		return TEXT("PotionDamage");
+		break;
+	case CrateWood:
+		return TEXT("CrateWood");
+		break;
+	case CrateMetal:
+		return TEXT("CrateMetal");
+		break;
+	default:
+		return TEXT("None");
+		break;
+	}
+}
+
+ItemName AItem::GetItemName()
+{
+	return ItemName;
+}
+
+UClass* AItem::GetItemStaticClass()
+{
+	return StaticClass();
+}

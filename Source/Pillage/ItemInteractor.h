@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Item.h"
+#include "Weapon.h"
 #include "ItemInteractor.generated.h"
 
 
@@ -29,6 +30,16 @@ public:
 
 
 private:
-	const float REACH = 120.f;
+	const float REACH = 100.f;
+	const uint32 WeaponLimit = 2;
+	
+	UPROPERTY()
+	TArray<AWeapon*> Weapons;
+
+	UPROPERTY()
+	TArray<AItem*> Items;
+
 	void ItemFound(AItem* Item);
+	void WeaponFound(AWeapon* Weapon);
+	void AddWeaponToInventory(AWeapon* Weapon);
 };
