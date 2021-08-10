@@ -7,7 +7,7 @@
 #include "Item.generated.h"
 
 UENUM()
-enum Class
+enum EClass
 {
 	Weapon		UMETA(DisplayName = "Weapon"),
 	Consumeable	UMETA(DisplayName = "Consumeable"),
@@ -15,7 +15,7 @@ enum Class
 };
 
 UENUM()
-enum ItemName
+enum EItemName
 {
 	Axe					UMETA(DisplayName = "Axe"),
 	Crossbow			UMETA(DisplayName = "Crossbow"),
@@ -38,9 +38,9 @@ class PILLAGE_API AItem : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AItem();
-	Class GetClass();
+	EClass GetClass();
 	FString GetItemNameString();
-	ItemName GetItemName();
+	EItemName GetItemName();
 	
 
 protected:
@@ -48,14 +48,13 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
-	TEnumAsByte<Class> Class;
+	TEnumAsByte<EClass> Class;
 
 	UPROPERTY(EditDefaultsOnly, meta = (AllowPrivateAccess = "true"))
-	TEnumAsByte<ItemName> ItemName;
+	TEnumAsByte<EItemName> ItemName;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	UClass* GetItemStaticClass();
 
 };

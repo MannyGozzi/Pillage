@@ -33,7 +33,7 @@ void UItemInteractor::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 bool UItemInteractor::FindItems()
 {
-	if (GetOwner() == nullptr) return false;
+	if (!GetOwner()) return false;
 	APillageCharacter* Owner = Cast<APillageCharacter>(GetOwner());
 	if (Owner == nullptr) return false;
 	const FVector Location = GetOwner()->GetActorLocation() + GetOwner()->GetActorForwardVector() * REACH;
@@ -51,17 +51,17 @@ bool UItemInteractor::FindItems()
 		ObjectTypes, AItem::StaticClass(), ActorsToIgnore, FoundItems
 	);
 
-	UKismetSystemLibrary::DrawDebugSphere(GetWorld(), Location, REACH, 16, FLinearColor::White, 1.f, 1.f );
+	//UKismetSystemLibrary::DrawDebugSphere(GetWorld(), Location, REACH, 16, FLinearColor::White, 1.f, 1.f );
 
 	if (ObjectFound)
 	{
 		for (AActor* Item: FoundItems)
 		{
-			if (GEngine == nullptr) return false;
-			if (Item == nullptr) return false;
+			if (!GEngine) return false;
+			if (!Item) return false;
 			GEngine->AddOnScreenDebugMessage(-1, 60.f, FColor::Orange, FString::Printf(TEXT("Hit %s"), *Item->GetName()));
 			AItem* FoundItem = Cast<AItem>(Item);
-			if (FoundItem == nullptr) continue;
+			if (!FoundItem) continue;
 			ItemFound(FoundItem);
 			break;
 		}
@@ -71,21 +71,21 @@ bool UItemInteractor::FindItems()
 
 void UItemInteractor::ItemFound(AItem* Item)
 {
-	Class ItemClass = Item->GetClass();
+	EClass ItemClass = Item->GetClass();
 	switch (ItemClass)
 	{
-	case Class::Weapon:
+	case EClass::Weapon:
 	{
 		AWeapon* Weapon = Cast<AWeapon>(Item);
 		if (Weapon != nullptr) WeaponFound(Weapon);
 		break;
 	}
-	case Class::Consumeable:
+	case EClass::Consumeable:
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Found consumeable"));
 		break;
 	}
-	case Class::Resource:
+	case EClass::Resource:
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Found resource"));
 		break;
@@ -97,20 +97,21 @@ void UItemInteractor::ItemFound(AItem* Item)
 
 void UItemInteractor::WeaponFound(AWeapon* Weapon)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Found Weapon: %s"), *Weapon->GetItemNameString());
-	if (Weapons.Num() > (int32) WeaponLimit) return;
+	if ((uint32)Weapons.Num() >= WeaponLimit)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Maximum number of items attained: WeaponLimit = (%d)"), WeaponLimit);
+		return;
+	}
 	AddWeaponToInventory(Weapon);
 }
 
 void UItemInteractor::AddWeaponToInventory(AWeapon* Weapon)
 {
-	Weapons.Add(Weapon);
 	UE_LOG(LogTemp, Warning, TEXT("Added %s to weapon inventory"), *Weapon->GetItemNameString());
-	UE_LOG(LogTemp, Warning, TEXT("Equipping weapon"));
-	if (GetOwner() == nullptr) return;
+	Weapons.Add(Weapon);
+	if (!GetOwner()) return;
 	APillageCharacter* Owner = Cast<APillageCharacter>(GetOwner());
 	if (Owner == nullptr) return;
-	UE_LOG(LogTemp, Warning, TEXT("Owner found, adding weapon"));
 	Owner->SetCurrentWeapon(Weapon);
 }
 

@@ -24,7 +24,7 @@ void AItem::Tick(float DeltaTime)
 
 }
 
-Class AItem::GetClass()
+EClass AItem::GetClass()
 {
 	return Class;
 }
@@ -33,31 +33,31 @@ FString AItem::GetItemNameString()
 {
 	switch (ItemName)
 	{
-	case Axe:
+	case EItemName::Axe:
 		return TEXT("Axe");
 		break;
-	case Sword:
+	case EItemName::Sword:
 		return TEXT("Sword");
 		break;
-	case Crossbow:
+	case EItemName::Crossbow:
 		return TEXT("Crossbow");
 		break;
-	case Staff:
+	case EItemName::Staff:
 		return TEXT("Staff");
 		break;
-	case PotionSpeed:
+	case EItemName::PotionSpeed:
 		return TEXT("PotionSpeed");
 		break;
-	case PotionFireSpeed:
+	case EItemName::PotionFireSpeed:
 		return TEXT("PotionFireSpeed");
 		break;
-	case PotionDamage:
+	case EItemName::PotionDamage:
 		return TEXT("PotionDamage");
 		break;
-	case CrateWood:
+	case EItemName::CrateWood:
 		return TEXT("CrateWood");
 		break;
-	case CrateMetal:
+	case EItemName::CrateMetal:
 		return TEXT("CrateMetal");
 		break;
 	default:
@@ -66,12 +66,7 @@ FString AItem::GetItemNameString()
 	}
 }
 
-ItemName AItem::GetItemName()
+EItemName AItem::GetItemName()
 {
 	return ItemName;
-}
-
-UClass* AItem::GetItemStaticClass()
-{
-	return StaticClass();
 }

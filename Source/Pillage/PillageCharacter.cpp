@@ -84,7 +84,7 @@ AWeapon* APillageCharacter::GetCurrentWeapon()
 
 void APillageCharacter::SetCurrentWeapon(AWeapon* Weapon)
 {
-	if (CurrentWeapon != nullptr)
+	if (CurrentWeapon)
 	{
 		CurrentWeapon->DetachFromActor(FDetachmentTransformRules::KeepRelativeTransform);
 	}
