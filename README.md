@@ -1,4 +1,8 @@
 # Pillage
-Necessary components to compile include: 
+Plugins + SDK's: 
 Epic Online Services SDK
-Assets
+
+
+Assets:
+PolygonKnights
+InfinityBladeWeapons
