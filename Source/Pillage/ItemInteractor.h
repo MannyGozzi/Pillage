@@ -21,13 +21,16 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	
+	UPROPERTY(ReplicatedUsing = OnRep_FoundWeapon)
+	AWeapon* FoundWeapon;
 
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	bool FindItems();
-
+	UFUNCTION(Server, Reliable, WithValidation)
+	void Server_FindItems();
 
 private:
 	const float REACH = 100.f;
@@ -39,7 +42,12 @@ private:
 	UPROPERTY()
 	TArray<AItem*> Items;
 
-	void ItemFound(AItem* Item);
+	UFUNCTION(Server, Reliable)
+	void Server_ItemFound(AItem* Item);
+
 	void WeaponFound(AWeapon* Weapon);
+	UFUNCTION()
 	void AddWeaponToInventory(AWeapon* Weapon);
+	UFUNCTION()
+	void OnRep_FoundWeapon();
 };

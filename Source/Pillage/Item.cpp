@@ -8,7 +8,7 @@ AItem::AItem()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	bReplicates = true;
 }
 
 // Called when the game starts or when spawned
@@ -69,4 +69,19 @@ FString AItem::GetItemNameString()
 EItemName AItem::GetItemName()
 {
 	return ItemName;
+}
+
+void AItem::ItemEquipped()
+{
+	IsEquipped = true;
+}
+
+void AItem::ItemUnequipped()
+{
+	IsEquipped = false;
+}
+
+bool AItem::IsItemEquipped()
+{
+	return IsEquipped;
 }

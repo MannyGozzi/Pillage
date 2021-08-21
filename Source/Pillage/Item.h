@@ -41,7 +41,9 @@ public:
 	EClass GetClass();
 	FString GetItemNameString();
 	EItemName GetItemName();
-	
+	void ItemEquipped();	// prevents a player from stealing items from another player when tracing items
+	void ItemUnequipped();	// allows an item to be picked up, default behavior
+	bool IsItemEquipped();
 
 protected:
 	// Called when the game starts or when spawned
@@ -56,5 +58,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
+	bool IsEquipped = false;
 
 };

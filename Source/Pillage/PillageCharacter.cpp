@@ -74,6 +74,7 @@ void APillageCharacter::BeginPlay()
 
 	CurrentWeapon = GetWorld()->SpawnActor<AWeapon>(WeaponClass);
 	CurrentWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("weapon_socket")); // runtime attachment
+	CurrentWeapon->ItemEquipped();
 	CurrentWeapon->SetOwner(this);
 }
 
@@ -96,7 +97,7 @@ void APillageCharacter::SetCurrentWeapon(AWeapon* Weapon)
 void APillageCharacter::FindItems()
 {
 	if (ItemInteractor == nullptr) return;
-	ItemInteractor->FindItems();
+	ItemInteractor->Server_FindItems();
 }
 
 
