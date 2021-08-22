@@ -30,6 +30,7 @@ public:
 
 protected:
 	void OnResetVR();
+	UFUNCTION(BlueprintCallable)
 	void FindItems();
 	/** Called for forwards/backward input */
 	void MoveForward(float Value);
